@@ -20,13 +20,16 @@ function App() {
   return (
     <main>
       <h1>AT Protocol starter</h1>
-      <p>Your app is running. Edit <code>src/main.tsx</code> to get started.</p>
+      <p>
+        Your app is running. Edit <code>src/main.tsx</code> to get started.
+      </p>
       <p className="status">
         PDS: <strong>{pds}</strong>
       </p>
       {pds === "not-configured" && (
         <p className="hint">
-          Set <code>PDS_URL</code> in <code>.env</code> to connect to a Personal Data Server.
+          Set <code>PDS_URL</code> in <code>.env</code> to connect to a Personal
+          Data Server.
         </p>
       )}
     </main>
