@@ -1,24 +1,21 @@
 {
-  "name": "app-protospace",
+  "name": "atproto-starter",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=24.22.1 <25"
+    "node": ">=24.16 <25",
+    "pnpm": ">=11 <12"
   },
   "scripts": {
-    "dev": "node --env-file-if-exists=.env scripts/dev.mjs",
+    "dev": "node --env-file-if-exists=.env server/dev.ts",
     "build": "tsc -p tsconfig.server.json && vite build",
     "start": "node --env-file-if-exists=.env dist/server/index.js",
+    "test": "node --test server/*.test.ts",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.server.json --noEmit",
-    "test": "node --test server/*.test.ts scripts/*.test.mjs",
-    "check": "pnpm format:check && pnpm typecheck && pnpm test && pnpm build",
-    "doctor": "node scripts/doctor.mjs",
-    "smoke": "node scripts/smoke.mjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "pds:demo": "node --env-file-if-exists=.env scripts/pds-demo.mjs"
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "react": "19.3.0",
@@ -29,7 +26,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.2",
-    "prettier": "3.9.10",
+    "prettier": "3.9.9",
     "typescript": "7.0.2",
     "vite": "8.3.4"
   },
