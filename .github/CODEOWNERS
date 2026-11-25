@@ -1,0 +1,3 @@
+# Review security-sensitive deployment and dependency changes.
+/.github/ @henrikmv
+/Dockerfile* @henrikmv

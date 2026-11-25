@@ -1,62 +1,57 @@
-# App Protospace
+# atproto-starter
 
-A small **React + TypeScript + Node.js** starter for building on **AT Protocol**. Start with a working UI and API, then use the included record example to connect your own idea to a Personal Data Server (PDS).
+A minimal starter for building an AT Protocol app with Node and React.
 
-## Start locally
+This is a clean slate. It gives you a working dev setup, production build, Docker, and a basic PDS reachability check. Everything beyond that is yours to add.
 
-Use **Node.js 24.17.0** (see `.node-version`) and **pnpm 11.8.0**. If needed, install pnpm with `npm install --global pnpm@11.8.0`.
+## Quick start
 
-1. Select **Use this template → Create a new repository** on [GitHub](https://github.com/demokratiloftet/app-protospace). Choose your own account or organisation, then clone your new repository.
-2. From that directory, run:
-
-   ```sh
-   pnpm install
-   pnpm dev
-   ```
-
-3. Open **http://127.0.0.1:5173**. Edit `src/main.tsx` and see your changes immediately. The Node API runs at http://127.0.0.1:3000 and restarts when its code changes. Ctrl+C stops both.
-
-No Docker, hosting account, PDS account or Tailscale access is needed for this step. `pnpm doctor` checks your local tools. If the ports are taken, use `DEV_PORT=5174 API_PORT=3001 pnpm dev`.
-
-## What works out of the box?
-
-| Included                        | What it does                                                                                             |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| React UI and Node API           | A local greeting example demonstrates a browser-to-backend request.                                      |
-| PDS connection check            | Set `PDS_URL` in `.env` and restart; the page checks whether that PDS is reachable.                      |
-| Real AT Protocol record example | With a test account and app password, `pnpm pds:demo` writes, reads and deletes a note on your PDS.      |
-| Checks and production build     | `pnpm check` runs formatting checks, types, tests and the build. Docker and GitHub Actions are included. |
-
-Starting the app **does not create a PDS, create an account or sign you in**. The page's PDS status is a reachability check. Browser sign-in/OAuth, a feed/indexer and an app database are not implemented.
-
-## Try your first AT Protocol record
+Requires Node.js 24.17.x and pnpm 11.8.0.
 
 ```sh
-cp .env.example .env
-# Edit .env: set PDS_URL, PDS_IDENTIFIER and PDS_APP_PASSWORD.
-pnpm pds:demo
+git clone <this-repo> my-app
+cd my-app
+pnpm install
+pnpm dev
 ```
 
-Use the PDS that actually hosts your test account and an app password from that account. `.env` is ignored by Git; `pnpm dev`, `pnpm start` and `pnpm pds:demo` load it. Existing shell variables take precedence. Restart after changing it.
+Open http://localhost:5173. You should see the app running.
 
-Choose the shared hackathon PDS, [a local sandbox with fixture accounts](docs/integrations.md#run-the-local-sandbox-instead), or your own PDS/provider. The shared PDS needs Tailscale access; the local sandbox needs Docker and Node.js and can be cloned from its public repository. Neither is required to start the UI and API.
+## Scripts
 
-The example prints the record's `at://` address, verifies its contents and removes it. Read [Connecting a PDS](docs/integrations.md) for account choices, the data flow and how to build on the example.
+```sh
+pnpm dev           # dev server (Vite + API)
+pnpm build         # production build
+pnpm start         # run the production build
+pnpm test          # run tests
+pnpm typecheck     # type check
+pnpm lint          # lint
+pnpm format        # format
+pnpm format:check  # check formatting without changing files
+```
 
-## Make it yours
+## Connecting to a PDS
 
-| File                            | Start here                                                                                                              |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `src/main.tsx`, `src/style.css` | Replace the example screen with your app.                                                                               |
-| `server/app.ts`                 | Add your backend routes. The starter accepts GET/HEAD only; add request validation and authentication for write routes. |
-| `scripts/pds-demo.mjs`          | Follow the login → write → read → delete example.                                                                       |
-| `.env.example`                  | Document your app's configuration without credentials.                                                                  |
-| `index.html`, `package.json`    | Change the title, metadata and package name. Also replace the repository links in `src/main.tsx`.                       |
+Copy `.env.example` to `.env` and set `PDS_URL` to the Personal Data Server you want to use. Without one, the app still runs — it just reports PDS as not configured.
 
-The PDS stores AT Protocol records; your app supplies its own interface and behaviour. Apps can share data when they understand the same record format. This starter's temporary note is an experiment, not a published interoperable schema.
+For local development, run a PDS using `atproto-sandbox` and point `PDS_URL` at it.
 
-[Hackathon guide](docs/HACKATHON.md) · [PDS guide](docs/integrations.md) · [Build and hosting](docs/deployment.md) · [Contributing](CONTRIBUTING.md)
+## Project layout
+
+```
+.
+├── src/              # React frontend
+├── server/           # Node HTTP server (serves API and static files)
+├── index.html        # Vite entry
+├── Dockerfile        # Container build
+├── compose.yaml      # Docker Compose config
+└── docs/DEPLOY.md    # Deployment guide
+```
+
+## Deploying
+
+See [docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## License
 
-Licensed under [MIT](LICENSE).
+MIT — see [LICENSE](LICENSE).
